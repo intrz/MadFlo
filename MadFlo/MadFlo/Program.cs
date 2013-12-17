@@ -14,7 +14,7 @@ namespace MadFlo
     {
         static void Main(string[] args)
         {
-            var aServer = new WebSocketServer(81, IPAddress.Any)
+            var aServer = new WebSocketServer(3569, IPAddress.Any)
             {
                 OnReceive = OnReceive,
                 OnSend = OnSend,
@@ -62,7 +62,7 @@ namespace MadFlo
             }
             catch (Exception e)
             {
-                context.Send(JsonConvert.SerializeObject("Error"));
+                context.Send(JsonConvert.SerializeObject("Error" + e.ToString()));
             }
         }
 

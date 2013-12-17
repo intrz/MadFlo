@@ -1,5 +1,6 @@
 ﻿using Alchemy;
 using Alchemy.Classes;
+using Mono.CSharp;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace MadFlo
 {
     class Program
     {
+        private static Evaluator evaluator = new Evaluator(new CompilerContext(new CompilerSettings(), new ConsoleReportPrinter()));
+
         static void Main(string[] args)
         {
             var aServer = new WebSocketServer(3569, IPAddress.Any)
@@ -43,7 +46,7 @@ namespace MadFlo
         public static void OnReceive(UserContext context)
         {
             Console.WriteLine("Received Data From :" + context.ClientAddress);
-
+            
             try
             {
                 var json = context.DataFrame.ToString();

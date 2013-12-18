@@ -46,26 +46,35 @@ namespace MadFlo
         public static void OnReceive(UserContext context)
         {
             Console.WriteLine("Received Data From :" + context.ClientAddress);
-            
-            try
-            {
-                var json = context.DataFrame.ToString();
+            Console.Write(context.DataFrame.ToString());
+            dynamic commandObject = JsonConvert.DeserializeObject(context.DataFrame.ToString());
+            List<string> inPorts = new List<string>() { "input1" };
+            List<string> outPorts = new List<string>() { "out" };
 
-                dynamic obj = JsonConvert.DeserializeObject(json);
-
-                switch ((string)obj.protocol)
-                {
-                    case "command":                        
-                        break;
-                    case "graph":
-                        break;
-                    case "network":
-                        break;
-                }
-            }
-            catch (Exception e)
+            switch ((string)commandObject.protocol)
             {
-                context.Send(JsonConvert.SerializeObject("Error" + e.ToString()));
+                case "component":
+                    dynamic response = new
+                    {
+                        protocol = "component",
+                        command = "component",
+                        payload = new
+                        {
+                            name = "name",
+                            description = "test",
+                            inPorts = inPorts,
+                            outPorts = outPorts
+                        }
+                    };
+                    var resp = JsonConvert.SerializeObject(response);
+                    context.Send(resp);
+                    break;
+                case "graph":
+                    break;
+                case "network":
+                    break;
+                default:
+                    break;
             }
         }
 

@@ -54,22 +54,35 @@ namespace MadFlo
             switch ((string)commandObject.protocol)
             {
                 case "component":
-                    dynamic response = new
+                    switch ((string)commandObject.command)
                     {
-                        protocol = "component",
-                        command = "component",
-                        payload = new
-                        {
-                            name = "name",
-                            description = "test",
-                            inPorts = inPorts,
-                            outPorts = outPorts
-                        }
-                    };
-                    var resp = JsonConvert.SerializeObject(response);
-                    context.Send(resp);
+                        case "list":
+                            Console.WriteLine("list components command");
+                            var resp = @"{""protocol"":""component"",""command"":""component"",""payload"":{""name"":""MyTestComponent"",""description"":""Test stuff"",""inPorts"":[{""id"":""input1"",""type"":""all""},{""id"":""input2"",""type"":""all""}],""outPorts"":[{""id"":""out"",""type"":""all""}]}}";
+                            dynamic response = new
+                              {
+                                  protocol = "component",
+                                  command = "component",
+                                  payload = new
+                                  {
+                                      name = "name",
+                                      description = "test",
+                                      inPorts = inPorts,
+                                      outPorts = outPorts
+                                  }
+                              };
+                            //var resp = JsonConvert.SerializeObject(response);
+                            context.Send(resp);
+                            break;
+                    }
                     break;
                 case "graph":
+                    switch ((string)commandObject.command)
+                    {
+                        case "clear":
+                            Console.WriteLine("clear graph command");
+                            break;
+                    }
                     break;
                 case "network":
                     break;

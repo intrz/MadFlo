@@ -45,7 +45,10 @@ namespace MadFlo
 
         public static void OnReceive(UserContext context)
         {
-            Console.WriteLine("Received Data From :" + context.ClientAddress);
+            string testReturn = @"{""protocol"":""component"",""command"":""component"",""payload"":{""name"":""ToggleBoolean"",""description"":""Invert output packet everytime an input packet arrives. Output defaults to false"",""inPorts"":[{""id"":""in"",""type"":""all""},{""id"":""reset"",""type"":""all""}],""outPorts"":[{""id"":""out"",""type"":""all""}]}}";
+
+            //Console.WriteLine("Received Data From :" + context.ClientAddress);
+            //{"protocol":"graph","command":"addnode","payload":{"id":"ToggleBoolean_u3bip","component":"ToggleBoolean","metadata":{"x":200,"y":200,"label":"ToggleBoolean"}}}
             Console.Write(context.DataFrame.ToString());
             dynamic commandObject = JsonConvert.DeserializeObject(context.DataFrame.ToString());
             List<string> inPorts = new List<string>() { "input1" };
@@ -54,20 +57,25 @@ namespace MadFlo
             switch ((string)commandObject.protocol)
             {
                 case "component":
-                    dynamic response = new
+                    switch ((string)commandObject.protocol)
                     {
-                        protocol = "component",
-                        command = "component",
-                        payload = new
-                        {
-                            name = "name",
-                            description = "test",
-                            inPorts = inPorts,
-                            outPorts = outPorts
-                        }
-                    };
-                    var resp = JsonConvert.SerializeObject(response);
-                    context.Send(resp);
+                        case "list":
+                            dynamic response = new
+                            {
+                                protocol = "component",
+                                command = "component",
+                                payload = new
+                                {
+                                    name = "name",
+                                    description = "test",
+                                    inPorts = inPorts,
+                                    outPorts = outPorts
+                                }
+                            };
+                            var resp = JsonConvert.SerializeObject(response);
+                            context.Send(testReturn);
+                            break;
+                    }
                     break;
                 case "graph":
                     break;

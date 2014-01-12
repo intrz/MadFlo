@@ -51,7 +51,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Component.cs" />
+    <Compile Include="NetworkProtocol.cs" />
+    <Compile Include="NodeId.cs" />
+    <Compile Include="Node.cs" />
     <Compile Include="Graph.cs" />
+    <Compile Include="GraphProperty.cs" />
+    <Compile Include="GraphName.cs" />
+    <Compile Include="GraphId.cs" />
+    <Compile Include="GraphProtocol.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Network.cs" />
     <Compile Include="Packet.cs" />

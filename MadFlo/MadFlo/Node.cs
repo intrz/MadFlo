@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace MadFlo
 {
-    public sealed class Graph
+    public sealed class Node
     {
-        public GraphId Id { get; private set; }
-        public GraphName Name { get; private set; }
+        public NodeId Id { get; private set; }
+        public Component Component { get; private set; }
 
-        public Graph()
+        public Node()
         {
-            Id = GraphId.Empty;
-            Name = GraphName.Empty;
+            Id = NodeId.Empty;
+            Component = Component.Empty;
         }
 
-        private readonly static Graph _empty = new Graph();
-        public static Graph Empty { get { return _empty; } }
+        private readonly static Node _empty = new Node();
+        public static Node Empty { get { return _empty; } }
 
         public bool IsEmpty()
         {
@@ -26,28 +26,28 @@ namespace MadFlo
         }
 
 
-        public Graph GetEmpty()
+        public Node GetEmpty()
         {
             return Empty;
         }
 
 
-        private Graph Clone()
+        private Node Clone()
         {
-            var c = new Graph();
+            var c = new Node();
             c.Id = this.Id;
             c.Name = this.Name;
             return c;
         }
 
-        public Graph WithName(GraphName value)
+        public Node WithName(NodeName value)
         {
             var c = this.Clone();
             c.Name = value;
             return c;
         }
 
-        public Graph WithId(GraphId value)
+        public Node WithId(NodeId value)
         {
             var c = this.Clone();
             c.Id = value;
@@ -56,7 +56,7 @@ namespace MadFlo
 
     }
 
-/*            function Graph(name) {
+/*            function Node(name) {
       this.name = name != null ? name : '';
       this.properties = {};
       this.nodes = [];

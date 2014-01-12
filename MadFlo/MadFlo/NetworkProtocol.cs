@@ -8,9 +8,25 @@ namespace MadFlo
 {
     public static class NetworkProtocol
     {
-        public static Func<Graph, Network> Clear = (graph) =>
+        public static Func<Graph, Network> Start = (graph) =>
         {
             //Runtime.Run(network)
+            return null;
+        };
+
+        public static Func<Graph, Network> Stop = (graph) =>
+        {
+            //Runtime.Stop(network)
+            return null;
+        };
+
+        public static Func<Edge, Graph, Graph> Connect = (edge, graph) =>
+        {
+            return null;
+        };
+
+        public static Func<Edge, Packet, Graph, Graph> Data = (edge, packet, graph) =>
+        {
             return null;
         };
     }

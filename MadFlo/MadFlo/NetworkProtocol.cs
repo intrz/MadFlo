@@ -29,5 +29,13 @@ namespace MadFlo
         {
             return null;
         };
+
+        public static Network AddNode(Network network, Process process)
+        {
+            var retVal =  network.AddProcess(process);
+
+            //send(retVal)
+            return retVal;
+        }
     }
 }

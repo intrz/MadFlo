@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+using Mad.Serdo;
+using MadFlo;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MadFlo
 {
-    public sealed class GraphId
+    public sealed class GraphId : IEmpty<GraphId>
     {
-        public string Value { get; private set; }
+        public string Value { get;  private set; }
 
         public GraphId()
         {
@@ -16,7 +15,7 @@ namespace MadFlo
         }
 
         private readonly static GraphId _empty = new GraphId();
-        public static GraphId Empty { get { return _empty; } }
+        public static GraphId Empty { get { return _empty; }   }
 
         public bool IsEmpty()
         {
@@ -46,6 +45,21 @@ namespace MadFlo
             var c = this.Clone();
             c.Value = value;
             return c;
+        }
+
+        // -----------------------
+        // With
+        // -----------------------
+
+        public GraphId WithIf(bool condition, Func<GraphId, GraphId> arg)
+        {
+            return condition ? With(arg) : this;
+        }
+
+
+        public GraphId With(Func<GraphId, GraphId> arg)
+        {
+            return arg.Invoke(this);
         }
 
     }

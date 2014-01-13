@@ -1,24 +1,30 @@
-﻿using System;
+using MadFlo;
+using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MadFlo
 {
     public sealed class Graph
     {
-        public GraphId Id { get; private set; }
-        public GraphName Name { get; private set; }
+        public GraphId Id { get;  private set; }
+        public GraphName Name { get;  private set; }
+        public ImmutableList<Node> Nodes { get;  private set; }
+        public ImmutableList<Edge> Edges { get;  private set; }
+        public ImmutableList<Packet> Initials { get;  private set; }
 
         public Graph()
         {
             Id = GraphId.Empty;
             Name = GraphName.Empty;
+            Nodes = ImmutableList.Create<Node>();
+            Edges = ImmutableList.Create<Edge>();
+            Initials = ImmutableList.Create<Packet>();
         }
 
         private readonly static Graph _empty = new Graph();
-        public static Graph Empty { get { return _empty; } }
+        public static Graph Empty { get { return _empty; }   }
 
         public bool IsEmpty()
         {
@@ -37,15 +43,15 @@ namespace MadFlo
             var c = new Graph();
             c.Id = this.Id;
             c.Name = this.Name;
+            c.Nodes = this.Nodes;
+            c.Edges = this.Edges;
+            c.Initials = this.Initials;
             return c;
         }
 
-        public Graph WithName(GraphName value)
-        {
-            var c = this.Clone();
-            c.Name = value;
-            return c;
-        }
+        // -----------------------
+        // Id
+        // -----------------------
 
         public Graph WithId(GraphId value)
         {
@@ -54,17 +60,208 @@ namespace MadFlo
             return c;
         }
 
-    }
+        // -----------------------
+        // Name
+        // -----------------------
 
-/*            function Graph(name) {
-      this.name = name != null ? name : '';
-      this.properties = {};
-      this.nodes = [];
-      this.edges = [];
-      this.initializers = [];
-      this.exports = [];
-      this.groups = [];
+        public Graph WithName(GraphName value)
+        {
+            var c = this.Clone();
+            c.Name = value;
+            return c;
+        }
+
+        // -----------------------
+        // Nodes
+        // -----------------------
+
+        public Graph WithNodes(IEnumerable<Node> values)
+        {
+            var c = this.Clone();
+            c.Nodes = values.ToImmutableList();
+            return c;
+        }
+
+
+        public Graph AddNodesIf(bool condition, IEnumerable<Node> values)
+        {
+            return condition ? this.AddNodes(values) : this;
+        }
+
+
+        public Graph AddNodes(IEnumerable<Node> values)
+        {
+            return this.WithNodes(this.Nodes.AddRange(values));
+        }
+
+
+        public Graph AddNodeIf(bool condition, Node value)
+        {
+            return condition ? this.AddNode(value) : this;
+        }
+
+
+        public Graph AddNode(Node value)
+        {
+            return this.WithNodes(this.Nodes.Add(value));
+        }
+
+
+        public Graph InsertNodes(int index, IEnumerable<Node> values)
+        {
+            return this.WithNodes(this.Nodes.InsertRange(index, values));
+        }
+
+
+        public Graph InsertNode(int index, Node value)
+        {
+            return this.WithNodes(this.Nodes.Insert(index, value));
+        }
+
+
+        public Graph ReplaceNode(Node oldValue, Node newValue)
+        {
+            return this.WithNodes(this.Nodes.Replace(oldValue, newValue));
+        }
+
+
+        public Graph RemoveNode(Node value)
+        {
+            return this.WithNodes(this.Nodes.Remove(value));
+        }
+
+        // -----------------------
+        // Edges
+        // -----------------------
+
+        public Graph WithEdges(IEnumerable<Edge> values)
+        {
+            var c = this.Clone();
+            c.Edges = values.ToImmutableList();
+            return c;
+        }
+
+
+        public Graph AddEdgesIf(bool condition, IEnumerable<Edge> values)
+        {
+            return condition ? this.AddEdges(values) : this;
+        }
+
+
+        public Graph AddEdges(IEnumerable<Edge> values)
+        {
+            return this.WithEdges(this.Edges.AddRange(values));
+        }
+
+
+        public Graph AddEdgeIf(bool condition, Edge value)
+        {
+            return condition ? this.AddEdge(value) : this;
+        }
+
+
+        public Graph AddEdge(Edge value)
+        {
+            return this.WithEdges(this.Edges.Add(value));
+        }
+
+
+        public Graph InsertEdges(int index, IEnumerable<Edge> values)
+        {
+            return this.WithEdges(this.Edges.InsertRange(index, values));
+        }
+
+
+        public Graph InsertEdge(int index, Edge value)
+        {
+            return this.WithEdges(this.Edges.Insert(index, value));
+        }
+
+
+        public Graph ReplaceEdge(Edge oldValue, Edge newValue)
+        {
+            return this.WithEdges(this.Edges.Replace(oldValue, newValue));
+        }
+
+
+        public Graph RemoveEdge(Edge value)
+        {
+            return this.WithEdges(this.Edges.Remove(value));
+        }
+
+        // -----------------------
+        // Initials
+        // -----------------------
+
+        public Graph WithInitials(IEnumerable<Packet> values)
+        {
+            var c = this.Clone();
+            c.Initials = values.ToImmutableList();
+            return c;
+        }
+
+
+        public Graph AddInitialsIf(bool condition, IEnumerable<Packet> values)
+        {
+            return condition ? this.AddInitials(values) : this;
+        }
+
+
+        public Graph AddInitials(IEnumerable<Packet> values)
+        {
+            return this.WithInitials(this.Initials.AddRange(values));
+        }
+
+
+        public Graph AddInitialIf(bool condition, Packet value)
+        {
+            return condition ? this.AddInitial(value) : this;
+        }
+
+
+        public Graph AddInitial(Packet value)
+        {
+            return this.WithInitials(this.Initials.Add(value));
+        }
+
+
+        public Graph InsertInitials(int index, IEnumerable<Packet> values)
+        {
+            return this.WithInitials(this.Initials.InsertRange(index, values));
+        }
+
+
+        public Graph InsertInitial(int index, Packet value)
+        {
+            return this.WithInitials(this.Initials.Insert(index, value));
+        }
+
+
+        public Graph ReplaceInitial(Packet oldValue, Packet newValue)
+        {
+            return this.WithInitials(this.Initials.Replace(oldValue, newValue));
+        }
+
+
+        public Graph RemoveInitial(Packet value)
+        {
+            return this.WithInitials(this.Initials.Remove(value));
+        }
+
+        // -----------------------
+        // With
+        // -----------------------
+
+        public Graph WithIf(bool condition, Func<Graph, Graph> arg)
+        {
+            return condition ? With(arg) : this;
+        }
+
+
+        public Graph With(Func<Graph, Graph> arg)
+        {
+            return arg.Invoke(this);
+        }
+
     }
-        */
-    
 }

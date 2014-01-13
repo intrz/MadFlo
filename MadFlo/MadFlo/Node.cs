@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MadFlo;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MadFlo
 {
     public sealed class Node
     {
-        public NodeId Id { get; private set; }
-        public Component Component { get; private set; }
+        public NodeId Id { get;  private set; }
+        public Component Component { get;  private set; }
 
         public Node()
         {
@@ -18,7 +16,7 @@ namespace MadFlo
         }
 
         private readonly static Node _empty = new Node();
-        public static Node Empty { get { return _empty; } }
+        public static Node Empty { get { return _empty; }   }
 
         public bool IsEmpty()
         {
@@ -36,16 +34,13 @@ namespace MadFlo
         {
             var c = new Node();
             c.Id = this.Id;
-            c.Name = this.Name;
+            c.Component = this.Component;
             return c;
         }
 
-        public Node WithName(NodeName value)
-        {
-            var c = this.Clone();
-            c.Name = value;
-            return c;
-        }
+        // -----------------------
+        // Id
+        // -----------------------
 
         public Node WithId(NodeId value)
         {
@@ -54,17 +49,31 @@ namespace MadFlo
             return c;
         }
 
-    }
+        // -----------------------
+        // Component
+        // -----------------------
 
-/*            function Node(name) {
-      this.name = name != null ? name : '';
-      this.properties = {};
-      this.nodes = [];
-      this.edges = [];
-      this.initializers = [];
-      this.exports = [];
-      this.groups = [];
+        public Node WithComponent(Component value)
+        {
+            var c = this.Clone();
+            c.Component = value;
+            return c;
+        }
+
+        // -----------------------
+        // With
+        // -----------------------
+
+        public Node WithIf(bool condition, Func<Node, Node> arg)
+        {
+            return condition ? With(arg) : this;
+        }
+
+
+        public Node With(Func<Node, Node> arg)
+        {
+            return arg.Invoke(this);
+        }
+
     }
-        */
-    
 }

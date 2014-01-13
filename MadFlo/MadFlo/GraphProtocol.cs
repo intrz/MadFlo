@@ -13,9 +13,10 @@ namespace MadFlo
             return Graph.Empty.WithId(id).WithName(name);
         };
 
-        public static Func<Node, Graph, Graph> AddNode = (node) =>
+        public static Func<Node, Graph, Graph> AddNode = (node, graph) =>
         {
-            return Graph.Empty.AddNode(node);
+
+            return graph.AddNode(node);
         };
     }
 }

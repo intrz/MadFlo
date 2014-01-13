@@ -1,11 +1,10 @@
-using Mad.Serdo;
 using MadFlo;
 using System;
 using System.Linq;
 
 namespace MadFlo
 {
-    public sealed class NodeId : IEmpty<NodeId>
+    public sealed class NodeId
     {
         public string Value { get;  private set; }
 

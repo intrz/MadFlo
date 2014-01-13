@@ -4,17 +4,17 @@ using System.Linq;
 
 namespace MadFlo
 {
-    public sealed class GraphName
+    public sealed class PortName
     {
         public string Value { get;  private set; }
 
-        public GraphName()
+        public PortName()
         {
             Value = string.Empty;
         }
 
-        private readonly static GraphName _empty = new GraphName();
-        public static GraphName Empty { get { return _empty; }   }
+        private readonly static PortName _empty = new PortName();
+        public static PortName Empty { get { return _empty; }   }
 
         public bool IsEmpty()
         {
@@ -22,15 +22,15 @@ namespace MadFlo
         }
 
 
-        public GraphName GetEmpty()
+        public PortName GetEmpty()
         {
             return Empty;
         }
 
 
-        private GraphName Clone()
+        private PortName Clone()
         {
-            var c = new GraphName();
+            var c = new PortName();
             c.Value = this.Value;
             return c;
         }
@@ -39,7 +39,7 @@ namespace MadFlo
         // Value
         // -----------------------
 
-        public GraphName WithValue(string value)
+        public PortName WithValue(string value)
         {
             var c = this.Clone();
             c.Value = value;
@@ -50,13 +50,13 @@ namespace MadFlo
         // With
         // -----------------------
 
-        public GraphName WithIf(bool condition, Func<GraphName, GraphName> arg)
+        public PortName WithIf(bool condition, Func<PortName, PortName> arg)
         {
             return condition ? With(arg) : this;
         }
 
 
-        public GraphName With(Func<GraphName, GraphName> arg)
+        public PortName With(Func<PortName, PortName> arg)
         {
             return arg.Invoke(this);
         }

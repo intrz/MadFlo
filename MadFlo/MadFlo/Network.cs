@@ -8,19 +8,25 @@ namespace MadFlo
 {
     public sealed class Network
     {
-        public ImmutableList<Process> Processes { get;  private set; }
+        public ImmutableList<Component> Components { get;  private set; }
         public ImmutableList<Socket> Connections { get;  private set; }
         public ImmutableList<Packet> Initials { get;  private set; }
 
         public Network()
         {
-            Processes = ImmutableList.Create<Process>();
+            Components = ImmutableList.Create<Component>();
             Connections = ImmutableList.Create<Socket>();
             Initials = ImmutableList.Create<Packet>();
         }
 
         private readonly static Network _empty = new Network();
         public static Network Empty { get { return _empty; }   }
+
+
+        public void Send(NodeId nodeId, PortName outPortName, object value) 
+        {
+
+        }
 
         public bool IsEmpty()
         {
@@ -37,69 +43,69 @@ namespace MadFlo
         private Network Clone()
         {
             var c = new Network();
-            c.Processes = this.Processes;
+            c.Components = this.Components;
             c.Connections = this.Connections;
             c.Initials = this.Initials;
             return c;
         }
 
         // -----------------------
-        // Processes
+        // Components
         // -----------------------
 
-        public Network WithProcesses(IEnumerable<Process> values)
+        public Network WithComponents(IEnumerable<Component> values)
         {
             var c = this.Clone();
-            c.Processes = values.ToImmutableList();
+            c.Components = values.ToImmutableList();
             return c;
         }
 
 
-        public Network AddProcessesIf(bool condition, IEnumerable<Process> values)
+        public Network AddComponentsIf(bool condition, IEnumerable<Component> values)
         {
-            return condition ? this.AddProcesses(values) : this;
+            return condition ? this.AddComponents(values) : this;
         }
 
 
-        public Network AddProcesses(IEnumerable<Process> values)
+        public Network AddComponents(IEnumerable<Component> values)
         {
-            return this.WithProcesses(this.Processes.AddRange(values));
+            return this.WithComponents(this.Components.AddRange(values));
         }
 
 
-        public Network AddProcesseIf(bool condition, Process value)
+        public Network AddComponentIf(bool condition, Component value)
         {
-            return condition ? this.AddProcesse(value) : this;
+            return condition ? this.AddComponent(value) : this;
         }
 
 
-        public Network AddProcess(Process value)
+        public Network AddComponent(Component value)
         {
-            return this.WithProcesses(this.Processes.Add(value));
+            return this.WithComponents(this.Components.Add(value));
         }
 
 
-        public Network InsertProcesses(int index, IEnumerable<Process> values)
+        public Network InsertComponents(int index, IEnumerable<Component> values)
         {
-            return this.WithProcesses(this.Processes.InsertRange(index, values));
+            return this.WithComponents(this.Components.InsertRange(index, values));
         }
 
 
-        public Network InsertProcess(int index, Process value)
+        public Network InsertComponent(int index, Component value)
         {
-            return this.WithProcesses(this.Processes.Insert(index, value));
+            return this.WithComponents(this.Components.Insert(index, value));
         }
 
 
-        public Network ReplaceProcess(Process oldValue, Process newValue)
+        public Network ReplaceComponent(Component oldValue, Component newValue)
         {
-            return this.WithProcesses(this.Processes.Replace(oldValue, newValue));
+            return this.WithComponents(this.Components.Replace(oldValue, newValue));
         }
 
 
-        public Network RemoveProcesse(Process value)
+        public Network RemoveComponent(Component value)
         {
-            return this.WithProcesses(this.Processes.Remove(value));
+            return this.WithComponents(this.Components.Remove(value));
         }
 
         // -----------------------

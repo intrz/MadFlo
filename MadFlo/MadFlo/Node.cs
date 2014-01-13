@@ -7,12 +7,12 @@ namespace MadFlo
     public sealed class Node
     {
         public NodeId Id { get;  private set; }
-        public Component Component { get;  private set; }
+        public IComponent Component { get;  private set; }
 
         public Node()
         {
             Id = NodeId.Empty;
-            Component = Component.Empty;
+            Component = new Component();
         }
 
         private readonly static Node _empty = new Node();
@@ -53,7 +53,7 @@ namespace MadFlo
         // Component
         // -----------------------
 
-        public Node WithComponent(Component value)
+        public Node WithComponent(IComponent value)
         {
             var c = this.Clone();
             c.Component = value;

@@ -54,6 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Component.cs" />
+    <Compile Include="Socket.cs" />
+    <Compile Include="Edge.cs" />
+    <Compile Include="PortName .cs" />
+    <Compile Include="IComponent.cs" />
     <Compile Include="NetworkProtocol.cs" />
     <Compile Include="NodeId.cs" />
     <Compile Include="Node.cs" />

@@ -6,15 +6,24 @@ using System.Threading.Tasks;
 
 namespace MadFlo
 {
-    public class Component
+    public class Component : IComponent
     {
-        public Network Network { get; set; }
-/*  Component.prototype.description = '';
-    Component.prototype.icon = null;
-    Component.prototype.isSubgraph
-    Component.prototype.error
-    Component.prototype.shutdown
-        */
+        Dictionary<PortName, object> portValues;
+        public Network Network { get; private set; }
+        Dictionary<PortName, List<IComponent>> receivers;
+
+        public Component()
+        {
+            portValues = new Dictionary<PortName, object>();
+            receivers = new Dictionary<PortName, List<IComponent>>();
+        }
+     /*   public Network Network { get; set; }
+//  Component.prototype.description = '';
+//    Component.prototype.icon = null;
+ //   Component.prototype.isSubgraph
+  //  Component.prototype.error
+  //  Component.prototype.shutdown
+        
         public void Send(Message message)
         {
             //network.SendMessage(message)
@@ -29,6 +38,30 @@ namespace MadFlo
         public void SetNetwork(Network network)
         {
 
+        }
+        */
+
+        public void Receive(PortName name, object value)
+        {
+            portValues[name] = value;
+            foreach (PortName port in portValues.Keys)
+            {
+                if (portValues[port] != null)
+                {
+                    Console.Out.Write("Hello world!");
+                }
+            }
+        }
+
+        public void Send(PortName outPortName, object value)
+        {
+            List<IComponent> receivers = receivers[outPortName];
+            //Network.Send(outPortName, value);
+        }
+
+        public void WithNetwork(Network value)
+        {
+            Network = value;
         }
     }
 }

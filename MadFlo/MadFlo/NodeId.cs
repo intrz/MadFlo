@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+using Mad.Serdo;
+using MadFlo;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MadFlo
 {
-    public sealed class NodeId
+    public sealed class NodeId : IEmpty<NodeId>
     {
-        public string Value { get; private set; }
+        public string Value { get;  private set; }
 
         public NodeId()
         {
@@ -16,7 +15,7 @@ namespace MadFlo
         }
 
         private readonly static NodeId _empty = new NodeId();
-        public static NodeId Empty { get { return _empty; } }
+        public static NodeId Empty { get { return _empty; }   }
 
         public bool IsEmpty()
         {
@@ -46,6 +45,21 @@ namespace MadFlo
             var c = this.Clone();
             c.Value = value;
             return c;
+        }
+
+        // -----------------------
+        // With
+        // -----------------------
+
+        public NodeId WithIf(bool condition, Func<NodeId, NodeId> arg)
+        {
+            return condition ? With(arg) : this;
+        }
+
+
+        public NodeId With(Func<NodeId, NodeId> arg)
+        {
+            return arg.Invoke(this);
         }
 
     }

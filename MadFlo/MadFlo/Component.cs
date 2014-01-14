@@ -55,7 +55,11 @@ namespace MadFlo
 
         public void Send(PortName outPortName, object value)
         {
-            List<IComponent> receivers = receivers[outPortName];
+            List<IComponent> receivingComponents = receivers[outPortName];
+            foreach (var receiver in receivingComponents)
+            {
+                receiver.Receive(outPortName, value);
+            }
             //Network.Send(outPortName, value);
         }
 

@@ -53,7 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comp.cs" />
     <Compile Include="Component.cs" />
+    <Compile Include="ImmComponent.cs" />
     <Compile Include="Socket.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="PortName .cs" />

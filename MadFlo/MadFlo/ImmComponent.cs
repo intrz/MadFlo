@@ -10,6 +10,7 @@ namespace MadFlo
     {
         public ImmutableDictionary<string, object> Properties { get;  private set; }
         public ImmutableList<Delegate> Functions { get;  private set; }
+        public int Version { get; private set; }
 
         public ImmComponent()
         {
@@ -48,6 +49,7 @@ namespace MadFlo
         {
             var c = this.Clone();
             c.Properties = values;
+            c.Version += 1;
             return c;
         }
 
@@ -88,6 +90,7 @@ namespace MadFlo
         {
             var c = this.Clone();
             c.Functions = values.ToImmutableList();
+            c.Version += 1;
             return c;
         }
 

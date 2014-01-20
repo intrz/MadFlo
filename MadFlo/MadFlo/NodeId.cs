@@ -10,7 +10,7 @@ namespace MadFlo
 
         public NodeId()
         {
-            Value = string.Empty;
+            Value = Guid.NewGuid().ToString();
         }
 
         private readonly static NodeId _empty = new NodeId();
@@ -44,21 +44,6 @@ namespace MadFlo
             var c = this.Clone();
             c.Value = value;
             return c;
-        }
-
-        // -----------------------
-        // With
-        // -----------------------
-
-        public NodeId WithIf(bool condition, Func<NodeId, NodeId> arg)
-        {
-            return condition ? With(arg) : this;
-        }
-
-
-        public NodeId With(Func<NodeId, NodeId> arg)
-        {
-            return arg.Invoke(this);
         }
 
     }

@@ -11,7 +11,7 @@ namespace MadFlo
         public GraphId Id { get;  private set; }
         public GraphName Name { get;  private set; }
         public ImmutableList<Node> Nodes { get;  private set; }
-        public ImmutableList<Edge> Edges { get;  private set; }
+        public ImmutableList<Socket> Edges { get;  private set; }
         public ImmutableList<Packet> Initials { get;  private set; }
 
         public Graph()
@@ -19,7 +19,7 @@ namespace MadFlo
             Id = GraphId.Empty;
             Name = GraphName.Empty;
             Nodes = ImmutableList.Create<Node>();
-            Edges = ImmutableList.Create<Edge>();
+            Edges = ImmutableList.Create<Socket>();
             Initials = ImmutableList.Create<Packet>();
         }
 
@@ -134,7 +134,7 @@ namespace MadFlo
         // Edges
         // -----------------------
 
-        public Graph WithEdges(IEnumerable<Edge> values)
+        public Graph WithEdges(IEnumerable<Socket> values)
         {
             var c = this.Clone();
             c.Edges = values.ToImmutableList();
@@ -142,49 +142,49 @@ namespace MadFlo
         }
 
 
-        public Graph AddEdgesIf(bool condition, IEnumerable<Edge> values)
+        public Graph AddEdgesIf(bool condition, IEnumerable<Socket> values)
         {
             return condition ? this.AddEdges(values) : this;
         }
 
 
-        public Graph AddEdges(IEnumerable<Edge> values)
+        public Graph AddEdges(IEnumerable<Socket> values)
         {
             return this.WithEdges(this.Edges.AddRange(values));
         }
 
 
-        public Graph AddEdgeIf(bool condition, Edge value)
+        public Graph AddEdgeIf(bool condition, Socket value)
         {
             return condition ? this.AddEdge(value) : this;
         }
 
 
-        public Graph AddEdge(Edge value)
+        public Graph AddEdge(Socket value)
         {
             return this.WithEdges(this.Edges.Add(value));
         }
 
 
-        public Graph InsertEdges(int index, IEnumerable<Edge> values)
+        public Graph InsertEdges(int index, IEnumerable<Socket> values)
         {
             return this.WithEdges(this.Edges.InsertRange(index, values));
         }
 
 
-        public Graph InsertEdge(int index, Edge value)
+        public Graph InsertEdge(int index, Socket value)
         {
             return this.WithEdges(this.Edges.Insert(index, value));
         }
 
 
-        public Graph ReplaceEdge(Edge oldValue, Edge newValue)
+        public Graph ReplaceEdge(Socket oldValue, Socket newValue)
         {
             return this.WithEdges(this.Edges.Replace(oldValue, newValue));
         }
 
 
-        public Graph RemoveEdge(Edge value)
+        public Graph RemoveEdge(Socket value)
         {
             return this.WithEdges(this.Edges.Remove(value));
         }

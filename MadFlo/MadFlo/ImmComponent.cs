@@ -10,12 +10,15 @@ namespace MadFlo
     {
         public ImmutableDictionary<string, object> Properties { get;  private set; }
         public ImmutableList<Delegate> Functions { get;  private set; }
+        public ImmutableDictionary<PortName, Delegate> Ports { get; private set; }
         public int Version { get; private set; }
 
         public ImmComponent()
         {
             Properties = ImmutableDictionary.Create<string, object>();
             Functions = ImmutableList.Create<Delegate>();
+            Ports = ImmutableDictionary.Create<PortName, Delegate>();
+            Version = 0;
         }
 
         private readonly static ImmComponent _empty = new ImmComponent();
@@ -38,12 +41,22 @@ namespace MadFlo
             var c = new ImmComponent();
             c.Properties = this.Properties;
             c.Functions = this.Functions;
+            c.Ports = this.Ports;
+            c.Version = this.Version;
             return c;
         }
 
         // -----------------------
         // Properties
         // -----------------------
+
+        public ImmComponent WithPorts(ImmutableDictionary<PortName, Delegate> values)
+        {
+            var c = this.Clone();
+            c.Ports = values;
+            c.Version += 1;
+            return c;
+        }
 
         public ImmComponent WithProperties(ImmutableDictionary<string, object> values)
         {
@@ -56,6 +69,11 @@ namespace MadFlo
         public ImmComponent AddProperty(string key, object value)
         {
             return this.WithProperties(this.Properties.Add(key, value));
+        }
+
+        public ImmComponent AddPort(PortName key, Delegate value)
+        {
+            return this.WithPorts(this.Ports.Add(key, value));
         }
 
 
@@ -128,20 +146,6 @@ namespace MadFlo
             return this.WithFunctions(this.Functions.Remove(value));
         }
 
-        // -----------------------
-        // With
-        // -----------------------
-
-        public ImmComponent WithIf(bool condition, Func<ImmComponent, ImmComponent> arg)
-        {
-            return condition ? With(arg) : this;
-        }
-
-
-        public ImmComponent With(Func<ImmComponent, ImmComponent> arg)
-        {
-            return arg.Invoke(this);
-        }
 
     }
 }

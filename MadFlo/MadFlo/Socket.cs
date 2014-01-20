@@ -6,13 +6,17 @@ namespace MadFlo
 {
     public sealed class Socket
     {
-        public NodeId NodeId { get;  private set; }
-        public PortName PortName { get; private set; }
+        public NodeId FromNodeId { get;  private set; }
+        public PortName FromPortName { get; private set; }
+        public NodeId ToNodeId { get; private set; }
+        public PortName ToPortName { get; private set; }
 
         public Socket()
         {
-            NodeId = NodeId.Empty;
-            PortName = PortName.Empty;
+            FromNodeId = NodeId.Empty;
+            FromPortName = PortName.Empty;
+            ToNodeId = NodeId.Empty;
+            ToPortName = PortName.Empty;
         }
 
         private readonly static Socket _empty = new Socket();
@@ -33,22 +37,39 @@ namespace MadFlo
         private Socket Clone()
         {
             var c = new Socket();
-            c.NodeId = this.NodeId;
-            c.PortName = this.PortName;
+            c.FromNodeId = this.FromNodeId;
+            c.FromPortName = this.FromPortName;
+            c.ToNodeId = this.ToNodeId;
+            c.ToPortName = this.ToPortName;
             return c;
         }
 
-        public Socket WithNodeId(NodeId value)
+        public Socket WithFromNodeId(NodeId value)
         {
             var c = this.Clone();
-            c.NodeId = value;
+            c.FromNodeId = value;
             return c;
         }
 
-        public Socket WithPortName(PortName value)
+        public Socket WithFromPortName(PortName value)
         {
             var c = this.Clone();
-            c.PortName = value;
+            c.FromPortName = value;
+            return c;
+        }
+
+
+        public Socket WithToNodeId(NodeId value)
+        {
+            var c = this.Clone();
+            c.ToNodeId = value;
+            return c;
+        }
+
+        public Socket WithToPortName(PortName value)
+        {
+            var c = this.Clone();
+            c.ToPortName = value;
             return c;
         }
 

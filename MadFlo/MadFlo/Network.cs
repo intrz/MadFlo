@@ -8,13 +8,13 @@ namespace MadFlo
 {
     public sealed class Network
     {
-        public ImmutableList<Component> Components { get;  private set; }
+        public ImmutableList<ImmComponent> Components { get;  private set; }
         public ImmutableList<Socket> Connections { get;  private set; }
         public ImmutableList<Packet> Initials { get;  private set; }
 
         public Network()
         {
-            Components = ImmutableList.Create<Component>();
+            Components = ImmutableList.Create<ImmComponent>();
             Connections = ImmutableList.Create<Socket>();
             Initials = ImmutableList.Create<Packet>();
         }
@@ -50,10 +50,10 @@ namespace MadFlo
         }
 
         // -----------------------
-        // Components
+        // ImmComponents
         // -----------------------
 
-        public Network WithComponents(IEnumerable<Component> values)
+        public Network WithImmComponents(IEnumerable<ImmComponent> values)
         {
             var c = this.Clone();
             c.Components = values.ToImmutableList();
@@ -61,51 +61,51 @@ namespace MadFlo
         }
 
 
-        public Network AddComponentsIf(bool condition, IEnumerable<Component> values)
+        public Network AddImmComponentsIf(bool condition, IEnumerable<ImmComponent> values)
         {
-            return condition ? this.AddComponents(values) : this;
+            return condition ? this.AddImmComponents(values) : this;
         }
 
 
-        public Network AddComponents(IEnumerable<Component> values)
+        public Network AddImmComponents(IEnumerable<ImmComponent> values)
         {
-            return this.WithComponents(this.Components.AddRange(values));
+            return this.WithImmComponents(this.Components.AddRange(values));
         }
 
 
-        public Network AddComponentIf(bool condition, Component value)
+        public Network AddImmComponentIf(bool condition, ImmComponent value)
         {
-            return condition ? this.AddComponent(value) : this;
+            return condition ? this.AddImmComponent(value) : this;
         }
 
 
-        public Network AddComponent(Component value)
+        public Network AddImmComponent(ImmComponent value)
         {
-            return this.WithComponents(this.Components.Add(value));
+            return this.WithImmComponents(this.Components.Add(value));
         }
 
 
-        public Network InsertComponents(int index, IEnumerable<Component> values)
+        public Network InsertImmComponents(int index, IEnumerable<ImmComponent> values)
         {
-            return this.WithComponents(this.Components.InsertRange(index, values));
+            return this.WithImmComponents(this.Components.InsertRange(index, values));
         }
 
 
-        public Network InsertComponent(int index, Component value)
+        public Network InsertImmComponent(int index, ImmComponent value)
         {
-            return this.WithComponents(this.Components.Insert(index, value));
+            return this.WithImmComponents(this.Components.Insert(index, value));
         }
 
 
-        public Network ReplaceComponent(Component oldValue, Component newValue)
+        public Network ReplaceImmComponent(ImmComponent oldValue, ImmComponent newValue)
         {
-            return this.WithComponents(this.Components.Replace(oldValue, newValue));
+            return this.WithImmComponents(this.Components.Replace(oldValue, newValue));
         }
 
 
-        public Network RemoveComponent(Component value)
+        public Network RemoveImmComponent(ImmComponent value)
         {
-            return this.WithComponents(this.Components.Remove(value));
+            return this.WithImmComponents(this.Components.Remove(value));
         }
 
         // -----------------------

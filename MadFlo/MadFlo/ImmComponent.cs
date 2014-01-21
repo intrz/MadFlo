@@ -10,7 +10,9 @@ namespace MadFlo
     {
         public ImmutableDictionary<string, object> Properties { get;  private set; }
         public ImmutableList<Delegate> Functions { get;  private set; }
-        public int Version { get; private set; }
+        public int MajorVersion { get; private set; }
+        public int MinorVersion { get; private set; }
+        public string Name { get; private set; }
 
         public ImmComponent()
         {
@@ -41,6 +43,13 @@ namespace MadFlo
             return c;
         }
 
+        public ImmComponent WithName(string value)
+        {
+            var c = this.Clone();
+            c.Name = value;
+            return c;
+        }
+
         // -----------------------
         // Properties
         // -----------------------
@@ -49,7 +58,7 @@ namespace MadFlo
         {
             var c = this.Clone();
             c.Properties = values;
-            c.Version += 1;
+            c.MajorVersion += 1;
             return c;
         }
 
@@ -90,7 +99,7 @@ namespace MadFlo
         {
             var c = this.Clone();
             c.Functions = values.ToImmutableList();
-            c.Version += 1;
+            c.MinorVersion += 1;
             return c;
         }
 
@@ -126,21 +135,6 @@ namespace MadFlo
         public ImmComponent RemoveFunction(Delegate value)
         {
             return this.WithFunctions(this.Functions.Remove(value));
-        }
-
-        // -----------------------
-        // With
-        // -----------------------
-
-        public ImmComponent WithIf(bool condition, Func<ImmComponent, ImmComponent> arg)
-        {
-            return condition ? With(arg) : this;
-        }
-
-
-        public ImmComponent With(Func<ImmComponent, ImmComponent> arg)
-        {
-            return arg.Invoke(this);
         }
 
     }

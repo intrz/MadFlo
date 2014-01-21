@@ -14,14 +14,14 @@ namespace MadFlo
         public int MinorVersion { get; private set; }
         public string Name { get; private set; }
         public ImmutableDictionary<PortName, Delegate> Ports { get; private set; }
-        public int Version { get; private set; }
 
         public ImmComponent()
         {
             Properties = ImmutableDictionary.Create<string, object>();
             Functions = ImmutableList.Create<Delegate>();
             Ports = ImmutableDictionary.Create<PortName, Delegate>();
-            Version = 0;
+            MinorVersion = 0;
+            MajorVersion = 0;
         }
 
         private readonly static ImmComponent _empty = new ImmComponent();
@@ -45,7 +45,8 @@ namespace MadFlo
             c.Properties = this.Properties;
             c.Functions = this.Functions;
             c.Ports = this.Ports;
-            c.Version = this.Version;
+            c.MinorVersion = this.MinorVersion;
+            c.MajorVersion = this.MajorVersion;
             return c;
         }
 
@@ -64,7 +65,7 @@ namespace MadFlo
         {
             var c = this.Clone();
             c.Ports = values;
-            c.Version += 1;
+            c.MajorVersion += 1;
             return c;
         }
 
@@ -77,7 +78,7 @@ namespace MadFlo
         {
             var c = this.Clone();
             c.Properties = values;
-            c.MajorVersion += 1;
+            c.MinorVersion += 1;
             return c;
         }
 

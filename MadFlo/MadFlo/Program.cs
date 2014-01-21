@@ -18,10 +18,11 @@ namespace MadFlo
         static void Main(string[] args)
         {
             Action<string> inpurtPort = (string x) => Console.WriteLine("Hello {0}", x);
-            var helloWorldComponent = ImmComponent.Empty.AddPort(PortName.Empty.WithValue("input"), inpurtPort);
+            var inputPortName = PortName.Empty.WithValue("input");
+            var helloWorldComponent = ImmComponent.Empty.AddPort(inputPortName, inpurtPort);
 
             var myNode = Node.Empty.WithComponent(helloWorldComponent);
-            var helloGraph = Graph.Empty.AddNode(myNode.Id, myNode).AddInitial(Packet.Empty.WithValue("World!"));
+            var helloGraph = Graph.Empty.AddNode(myNode.Id, myNode).AddInitial(Packet.Empty.WithValue("World!").WithToPortName(inputPortName));
 
             foreach (var initial in helloGraph.Initials)
             {

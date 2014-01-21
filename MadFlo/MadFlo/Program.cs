@@ -17,6 +17,24 @@ namespace MadFlo
 
         static void Main(string[] args)
         {
+            Action<string> inpurtPort = (string x) => Console.WriteLine("Hello {0}", x);
+            var helloWorldComponent = ImmComponent.Empty.AddPort(PortName.Empty.WithValue("input"), inpurtPort);
+
+            var myNode = Node.Empty.WithComponent(helloWorldComponent);
+            var helloGraph = Graph.Empty.AddNode(myNode.Id, myNode).AddInitial(Packet.Empty.WithValue("World!"));
+
+            foreach (var initial in helloGraph.Initials)
+            {
+                var nodeId = initial.ToNodeId;
+                var portName = initial.ToPortName;
+                var value = initial.Value;
+                var node = helloGraph.Nodes[nodeId];
+                var port = node.Component.Ports[portName];
+                port.DynamicInvoke(value);
+            }
+
+            Console.Out.Write("jauda");
+
             var aServer = new WebSocketServer(3569, IPAddress.Any)
             {
                 OnReceive = OnReceive,
@@ -100,5 +118,6 @@ namespace MadFlo
         {
             Console.WriteLine("Client Disconnected : " + context.ClientAddress);
         }
+
     }
 }

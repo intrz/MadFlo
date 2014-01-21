@@ -10,7 +10,8 @@ namespace MadFlo
     {
         public GraphId Id { get;  private set; }
         public GraphName Name { get;  private set; }
-        public ImmutableList<Node> Nodes { get;  private set; }
+        //public ImmutableList<Node> Nodes { get;  private set; }
+        public ImmutableDictionary<NodeId, Node> Nodes { get; private set; }
         public ImmutableList<Socket> Edges { get;  private set; }
         public ImmutableList<Packet> Initials { get;  private set; }
 
@@ -18,7 +19,7 @@ namespace MadFlo
         {
             Id = GraphId.Empty;
             Name = GraphName.Empty;
-            Nodes = ImmutableList.Create<Node>();
+            Nodes = ImmutableDictionary.Create<NodeId,Node>();
             Edges = ImmutableList.Create<Socket>();
             Initials = ImmutableList.Create<Packet>();
         }
@@ -48,7 +49,17 @@ namespace MadFlo
             c.Initials = this.Initials;
             return c;
         }
+        public Graph WithNodes(ImmutableDictionary<NodeId, Node> values)
+        {
+            var c = this.Clone();
+            c.Nodes = values;
+            return c;
+        }
 
+        public Graph AddNode(NodeId key, Node value)
+        {
+            return this.WithNodes(this.Nodes.Add(key, value));
+        }
         // -----------------------
         // Id
         // -----------------------
@@ -75,31 +86,17 @@ namespace MadFlo
         // Nodes
         // -----------------------
 
-        public Graph WithNodes(IEnumerable<Node> values)
+        /*public Graph WithNodes(IEnumerable<Node> values)
         {
             var c = this.Clone();
             c.Nodes = values.ToImmutableList();
             return c;
         }
 
-
-        public Graph AddNodesIf(bool condition, IEnumerable<Node> values)
-        {
-            return condition ? this.AddNodes(values) : this;
-        }
-
-
         public Graph AddNodes(IEnumerable<Node> values)
         {
             return this.WithNodes(this.Nodes.AddRange(values));
         }
-
-
-        public Graph AddNodeIf(bool condition, Node value)
-        {
-            return condition ? this.AddNode(value) : this;
-        }
-
 
         public Graph AddNode(Node value)
         {
@@ -129,7 +126,7 @@ namespace MadFlo
         {
             return this.WithNodes(this.Nodes.Remove(value));
         }
-
+        */
         // -----------------------
         // Edges
         // -----------------------
@@ -141,24 +138,10 @@ namespace MadFlo
             return c;
         }
 
-
-        public Graph AddEdgesIf(bool condition, IEnumerable<Socket> values)
-        {
-            return condition ? this.AddEdges(values) : this;
-        }
-
-
         public Graph AddEdges(IEnumerable<Socket> values)
         {
             return this.WithEdges(this.Edges.AddRange(values));
         }
-
-
-        public Graph AddEdgeIf(bool condition, Socket value)
-        {
-            return condition ? this.AddEdge(value) : this;
-        }
-
 
         public Graph AddEdge(Socket value)
         {
@@ -201,21 +184,10 @@ namespace MadFlo
         }
 
 
-        public Graph AddInitialsIf(bool condition, IEnumerable<Packet> values)
-        {
-            return condition ? this.AddInitials(values) : this;
-        }
-
 
         public Graph AddInitials(IEnumerable<Packet> values)
         {
             return this.WithInitials(this.Initials.AddRange(values));
-        }
-
-
-        public Graph AddInitialIf(bool condition, Packet value)
-        {
-            return condition ? this.AddInitial(value) : this;
         }
 
 
@@ -246,21 +218,6 @@ namespace MadFlo
         public Graph RemoveInitial(Packet value)
         {
             return this.WithInitials(this.Initials.Remove(value));
-        }
-
-        // -----------------------
-        // With
-        // -----------------------
-
-        public Graph WithIf(bool condition, Func<Graph, Graph> arg)
-        {
-            return condition ? With(arg) : this;
-        }
-
-
-        public Graph With(Func<Graph, Graph> arg)
-        {
-            return arg.Invoke(this);
         }
 
     }

@@ -58,6 +58,11 @@ namespace MadFlo
             return c;
         }
 
+        public ImmComponent AddPort(PortName key, Delegate value)
+        {
+            return this.WithPorts(this.Ports.Add(key, value));
+        }
+
         public ImmComponent WithProperties(ImmutableDictionary<string, object> values)
         {
             var c = this.Clone();
@@ -69,11 +74,6 @@ namespace MadFlo
         public ImmComponent AddProperty(string key, object value)
         {
             return this.WithProperties(this.Properties.Add(key, value));
-        }
-
-        public ImmComponent AddPort(PortName key, Delegate value)
-        {
-            return this.WithPorts(this.Ports.Add(key, value));
         }
 
 

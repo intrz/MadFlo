@@ -13,7 +13,7 @@ namespace MadFlo
         //public ImmutableList<Node> Nodes { get;  private set; }
         public ImmutableDictionary<NodeId, Node> Nodes { get; private set; }
         public ImmutableList<Socket> Edges { get;  private set; }
-        public ImmutableList<Packet> Initials { get;  private set; }
+        public ImmutableList<Initial> Initials { get;  private set; }
 
         public Graph()
         {
@@ -21,7 +21,7 @@ namespace MadFlo
             Name = GraphName.Empty;
             Nodes = ImmutableDictionary.Create<NodeId,Node>();
             Edges = ImmutableList.Create<Socket>();
-            Initials = ImmutableList.Create<Packet>();
+            Initials = ImmutableList.Create<Initial>();
         }
 
         private readonly static Graph _empty = new Graph();
@@ -176,7 +176,7 @@ namespace MadFlo
         // Initials
         // -----------------------
 
-        public Graph WithInitials(IEnumerable<Packet> values)
+        public Graph WithInitials(IEnumerable<Initial> values)
         {
             var c = this.Clone();
             c.Initials = values.ToImmutableList();
@@ -185,37 +185,37 @@ namespace MadFlo
 
 
 
-        public Graph AddInitials(IEnumerable<Packet> values)
+        public Graph AddInitials(IEnumerable<Initial> values)
         {
             return this.WithInitials(this.Initials.AddRange(values));
         }
 
 
-        public Graph AddInitial(Packet value)
+        public Graph AddInitial(Initial value)
         {
             return this.WithInitials(this.Initials.Add(value));
         }
 
 
-        public Graph InsertInitials(int index, IEnumerable<Packet> values)
+        public Graph InsertInitials(int index, IEnumerable<Initial> values)
         {
             return this.WithInitials(this.Initials.InsertRange(index, values));
         }
 
 
-        public Graph InsertInitial(int index, Packet value)
+        public Graph InsertInitial(int index, Initial value)
         {
             return this.WithInitials(this.Initials.Insert(index, value));
         }
 
 
-        public Graph ReplaceInitial(Packet oldValue, Packet newValue)
+        public Graph ReplaceInitial(Initial oldValue, Initial newValue)
         {
             return this.WithInitials(this.Initials.Replace(oldValue, newValue));
         }
 
 
-        public Graph RemoveInitial(Packet value)
+        public Graph RemoveInitial(Initial value)
         {
             return this.WithInitials(this.Initials.Remove(value));
         }

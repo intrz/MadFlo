@@ -10,13 +10,13 @@ namespace MadFlo
     {
         public ImmutableList<ImmComponent> Components { get;  private set; }
         public ImmutableList<Socket> Connections { get;  private set; }
-        public ImmutableList<Packet> Initials { get;  private set; }
+        public ImmutableList<Initial> Initials { get;  private set; }
 
         public Network()
         {
             Components = ImmutableList.Create<ImmComponent>();
             Connections = ImmutableList.Create<Socket>();
-            Initials = ImmutableList.Create<Packet>();
+            Initials = ImmutableList.Create<Initial>();
         }
 
         private readonly static Network _empty = new Network();
@@ -171,7 +171,7 @@ namespace MadFlo
         // Initials
         // -----------------------
 
-        public Network WithInitials(IEnumerable<Packet> values)
+        public Network WithInitials(IEnumerable<Initial> values)
         {
             var c = this.Clone();
             c.Initials = values.ToImmutableList();
@@ -179,49 +179,49 @@ namespace MadFlo
         }
 
 
-        public Network AddInitialsIf(bool condition, IEnumerable<Packet> values)
+        public Network AddInitialsIf(bool condition, IEnumerable<Initial> values)
         {
             return condition ? this.AddInitials(values) : this;
         }
 
 
-        public Network AddInitials(IEnumerable<Packet> values)
+        public Network AddInitials(IEnumerable<Initial> values)
         {
             return this.WithInitials(this.Initials.AddRange(values));
         }
 
 
-        public Network AddInitialIf(bool condition, Packet value)
+        public Network AddInitialIf(bool condition, Initial value)
         {
             return condition ? this.AddInitial(value) : this;
         }
 
 
-        public Network AddInitial(Packet value)
+        public Network AddInitial(Initial value)
         {
             return this.WithInitials(this.Initials.Add(value));
         }
 
 
-        public Network InsertInitials(int index, IEnumerable<Packet> values)
+        public Network InsertInitials(int index, IEnumerable<Initial> values)
         {
             return this.WithInitials(this.Initials.InsertRange(index, values));
         }
 
 
-        public Network InsertInitial(int index, Packet value)
+        public Network InsertInitial(int index, Initial value)
         {
             return this.WithInitials(this.Initials.Insert(index, value));
         }
 
 
-        public Network ReplaceInitial(Packet oldValue, Packet newValue)
+        public Network ReplaceInitial(Initial oldValue, Initial newValue)
         {
             return this.WithInitials(this.Initials.Replace(oldValue, newValue));
         }
 
 
-        public Network RemoveInitial(Packet value)
+        public Network RemoveInitial(Initial value)
         {
             return this.WithInitials(this.Initials.Remove(value));
         }

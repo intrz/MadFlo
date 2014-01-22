@@ -17,12 +17,13 @@ namespace MadFlo
 
         static void Main(string[] args)
         {
-            Action<string> inpurtPort = (string x) => Console.WriteLine("Hello {0}", x);
+            Action<string> inputPortProcessor = (string x) => Console.WriteLine("Hello {0}", x);
             var inputPortName = PortName.Empty.WithValue("input");
-            var helloWorldComponent = ImmComponent.Empty.AddPort(inputPortName, inpurtPort);
+            Port inputPort = Port.Empty.WithName(inputPortName).WithPortType(PortType.Empty.WithValue("string")).WithProcess(inputPortProcessor);
+            var helloWorldComponent = ImmComponent.Empty.AddPort(inputPortName, inputPort);
 
             var myNode = Node.Empty.WithComponent(helloWorldComponent);
-            var helloGraph = Graph.Empty.AddNode(myNode.Id, myNode).AddInitial(Packet.Empty.WithValue("World!").WithToPortName(inputPortName));
+            var helloGraph = Graph.Empty.AddNode(myNode.Id, myNode).AddInitial(Initial.Empty.WithValue("World!").WithToPortName(inputPortName));
 
             foreach (var initial in helloGraph.Initials)
             {
@@ -31,7 +32,7 @@ namespace MadFlo
                 var value = initial.Value;
                 var node = helloGraph.Nodes[nodeId];
                 var port = node.Component.Ports[portName];
-                port.DynamicInvoke(value);
+                port.Process.DynamicInvoke(value);
             }
 
             Console.Out.Write("jauda");

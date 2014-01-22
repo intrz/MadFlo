@@ -25,7 +25,7 @@ namespace MadFlo
             return null;
         };
 
-        public static Func<Edge, Packet, Graph, Graph> Data = (edge, packet, graph) =>
+        public static Func<Edge, Initial, Graph, Graph> Data = (edge, packet, graph) =>
         {
             return null;
         };

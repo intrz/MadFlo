@@ -10,6 +10,6 @@ namespace MadFlo
     {
         public Component Target { get; set; }
         public Port TargetPort { get; set; }
-        public Packet Packet { get; set; }
+        public Initial Packet { get; set; }
     }
 }

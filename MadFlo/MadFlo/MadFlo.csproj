@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Comp.cs" />
     <Compile Include="Component.cs" />
+    <Compile Include="PortType.cs" />
     <Compile Include="ImmComponent.cs" />
     <Compile Include="Socket.cs" />
     <Compile Include="Edge.cs" />
@@ -70,7 +71,7 @@
     <Compile Include="GraphProtocol.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Network.cs" />
-    <Compile Include="Packet.cs" />
+    <Compile Include="Initial.cs" />
     <Compile Include="Port.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

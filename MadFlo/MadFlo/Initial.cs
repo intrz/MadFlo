@@ -6,21 +6,23 @@ using System.Threading.Tasks;
 
 namespace MadFlo
 {
-    public sealed class Packet
+    public sealed class Initial
     {
         public object Value { get;  private set; }
         public NodeId ToNodeId { get; private set; }
         public PortName ToPortName { get; private set; }
+        public GraphId GraphId { get; private set; }
 
-        public Packet()
+        public Initial()
         {
             Value = string.Empty;
             ToNodeId = NodeId.Empty;
             ToPortName = PortName.Empty;
+            GraphId = GraphId.Empty;
         }
 
-        private readonly static Packet _empty = new Packet();
-        public static Packet Empty { get { return _empty; } }
+        private readonly static Initial _empty = new Initial();
+        public static Initial Empty { get { return _empty; } }
 
         public bool IsEmpty()
         {
@@ -28,36 +30,36 @@ namespace MadFlo
         }
 
 
-        public Packet GetEmpty()
+        public Initial GetEmpty()
         {
             return Empty;
         }
 
 
-        private Packet Clone()
+        private Initial Clone()
         {
-            var c = new Packet();
+            var c = new Initial();
             c.Value = this.Value;
             c.ToNodeId = this.ToNodeId;
             c.ToPortName = this.ToPortName;
             return c;
         }
 
-        public Packet WithValue(object value)
+        public Initial WithValue(object value)
         {
             var c = this.Clone();
             c.Value = value;
             return c;
         }
 
-        public Packet WithToNodeId(NodeId value)
+        public Initial WithToNodeId(NodeId value)
         {
             var c = this.Clone();
             c.ToNodeId = value;
             return c;
         }
 
-        public Packet WithToPortName(PortName value)
+        public Initial WithToPortName(PortName value)
         {
             var c = this.Clone();
             c.ToPortName = value;

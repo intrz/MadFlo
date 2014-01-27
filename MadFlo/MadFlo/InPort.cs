@@ -6,25 +6,25 @@ using System.Threading.Tasks;
 
 namespace MadFlo
 {
-    public sealed class Port
+    public sealed class InPort
     {
         //public NodeId FromNodeId { get;  private set; }
-        public PortName Name { get; private set; }
+        public InPortName Name { get; private set; }
         //public NodeId ToNodeId { get; private set; }
         public PortType PortType { get; private set; }
         public Delegate Process { get; private set; }
 
-        public Port()
+        public InPort()
         {
             //FromNodeId = NodeId.Empty;
-            Name = PortName.Empty;
+            Name = InPortName.Empty;
             //ToNodeId = NodeId.Empty;
             PortType = PortType.Empty;
             Process = new Action(() => { });
         }
 
-        private readonly static Port _empty = new Port();
-        public static Port Empty { get { return _empty; } }
+        private readonly static InPort _empty = new InPort();
+        public static InPort Empty { get { return _empty; } }
 
         public bool IsEmpty()
         {
@@ -32,15 +32,15 @@ namespace MadFlo
         }
 
 
-        public Port GetEmpty()
+        public InPort GetEmpty()
         {
             return Empty;
         }
 
 
-        private Port Clone()
+        private InPort Clone()
         {
-            var c = new Port();
+            var c = new InPort();
             //c.FromNodeId = this.FromNodeId;
             c.Name = this.Name;
             c.PortType = this.PortType;
@@ -49,21 +49,21 @@ namespace MadFlo
             return c;
         }
 
-        public Port WithName(PortName value)
+        public InPort WithName(InPortName value)
         {
             var c = this.Clone();
             c.Name = value;
             return c;
         }
 
-        public Port WithPortType(PortType value)
+        public InPort WithPortType(PortType value)
         {
             var c = this.Clone();
             c.PortType = value;
             return c;
         }
 
-        public Port WithProcess(Delegate value)
+        public InPort WithProcess(Delegate value)
         {
             var c = this.Clone();
             c.Process = value;

@@ -23,7 +23,7 @@ namespace MadFlo
         public static Network Empty { get { return _empty; }   }
 
 
-        public void Send(NodeId nodeId, PortName outPortName, object value) 
+        public void Send(NodeId nodeId, InPortName outPortName, object value) 
         {
 
         }

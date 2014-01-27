@@ -9,7 +9,7 @@ namespace MadFlo
     public class Message
     {
         public Component Target { get; set; }
-        public Port TargetPort { get; set; }
+        public InPort TargetPort { get; set; }
         public Initial Packet { get; set; }
     }
 }

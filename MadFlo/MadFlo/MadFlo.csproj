@@ -55,11 +55,13 @@
   <ItemGroup>
     <Compile Include="Comp.cs" />
     <Compile Include="Component.cs" />
+    <Compile Include="OutPortName.cs" />
+    <Compile Include="OutPort.cs" />
     <Compile Include="PortType.cs" />
     <Compile Include="ImmComponent.cs" />
     <Compile Include="Socket.cs" />
     <Compile Include="Edge.cs" />
-    <Compile Include="PortName .cs" />
+    <Compile Include="InPortName .cs" />
     <Compile Include="IComponent.cs" />
     <Compile Include="NetworkProtocol.cs" />
     <Compile Include="NodeId.cs" />
@@ -72,7 +74,7 @@
     <Compile Include="Message.cs" />
     <Compile Include="Network.cs" />
     <Compile Include="Initial.cs" />
-    <Compile Include="Port.cs" />
+    <Compile Include="InPort.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

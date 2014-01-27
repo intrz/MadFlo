@@ -10,14 +10,14 @@ namespace MadFlo
     {
         public object Value { get;  private set; }
         public NodeId ToNodeId { get; private set; }
-        public PortName ToPortName { get; private set; }
+        public InPortName ToPortName { get; private set; }
         public GraphId GraphId { get; private set; }
 
         public Initial()
         {
             Value = string.Empty;
             ToNodeId = NodeId.Empty;
-            ToPortName = PortName.Empty;
+            ToPortName = InPortName.Empty;
             GraphId = GraphId.Empty;
         }
 
@@ -59,7 +59,7 @@ namespace MadFlo
             return c;
         }
 
-        public Initial WithToPortName(PortName value)
+        public Initial WithToPortName(InPortName value)
         {
             var c = this.Clone();
             c.ToPortName = value;

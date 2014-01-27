@@ -8,8 +8,8 @@ namespace MadFlo
 {
     public interface IComponent
     {
-        void Send(PortName outPort, object value);
-        void Receive(PortName portName, object value);
+        void Send(InPortName outPort, object value);
+        void Receive(InPortName portName, object value);
         void WithNetwork(Network network);
     }
 }

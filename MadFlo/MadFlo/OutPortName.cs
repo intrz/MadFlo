@@ -4,17 +4,17 @@ using System.Linq;
 
 namespace MadFlo
 {
-    public sealed class PortName
+    public sealed class OutPortName
     {
         public string Value { get;  private set; }
 
-        public PortName()
+        public OutPortName()
         {
             Value = string.Empty;
         }
 
-        private readonly static PortName _empty = new PortName();
-        public static PortName Empty { get { return _empty; }   }
+        private readonly static OutPortName _empty = new OutPortName();
+        public static OutPortName Empty { get { return _empty; }   }
 
         public bool IsEmpty()
         {
@@ -22,15 +22,15 @@ namespace MadFlo
         }
 
 
-        public PortName GetEmpty()
+        public OutPortName GetEmpty()
         {
             return Empty;
         }
 
 
-        private PortName Clone()
+        private OutPortName Clone()
         {
-            var c = new PortName();
+            var c = new OutPortName();
             c.Value = this.Value;
             return c;
         }
@@ -39,7 +39,7 @@ namespace MadFlo
         // Value
         // -----------------------
 
-        public PortName WithValue(string value)
+        public OutPortName WithValue(string value)
         {
             var c = this.Clone();
             c.Value = value;
@@ -50,13 +50,13 @@ namespace MadFlo
         // With
         // -----------------------
 
-        public PortName WithIf(bool condition, Func<PortName, PortName> arg)
+        public OutPortName WithIf(bool condition, Func<OutPortName, OutPortName> arg)
         {
             return condition ? With(arg) : this;
         }
 
 
-        public PortName With(Func<PortName, PortName> arg)
+        public OutPortName With(Func<OutPortName, OutPortName> arg)
         {
             return arg.Invoke(this);
         }

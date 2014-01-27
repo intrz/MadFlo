@@ -7,16 +7,16 @@ namespace MadFlo
     public sealed class Socket
     {
         public NodeId FromNodeId { get;  private set; }
-        public PortName FromPortName { get; private set; }
+        public OutPortName FromPortName { get; private set; }
         public NodeId ToNodeId { get; private set; }
-        public PortName ToPortName { get; private set; }
+        public InPortName ToPortName { get; private set; }
 
         public Socket()
         {
             FromNodeId = NodeId.Empty;
-            FromPortName = PortName.Empty;
+            FromPortName = OutPortName.Empty;
             ToNodeId = NodeId.Empty;
-            ToPortName = PortName.Empty;
+            ToPortName = InPortName.Empty;
         }
 
         private readonly static Socket _empty = new Socket();
@@ -51,7 +51,7 @@ namespace MadFlo
             return c;
         }
 
-        public Socket WithFromPortName(PortName value)
+        public Socket WithFromPortName(OutPortName value)
         {
             var c = this.Clone();
             c.FromPortName = value;
@@ -66,7 +66,7 @@ namespace MadFlo
             return c;
         }
 
-        public Socket WithToPortName(PortName value)
+        public Socket WithToPortName(InPortName value)
         {
             var c = this.Clone();
             c.ToPortName = value;

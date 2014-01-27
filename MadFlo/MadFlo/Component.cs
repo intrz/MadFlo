@@ -8,14 +8,14 @@ namespace MadFlo
 {
     public class Component : IComponent
     {
-        Dictionary<PortName, object> portValues;
+        Dictionary<InPortName, object> portValues;
         public Network Network { get; private set; }
-        Dictionary<PortName, List<IComponent>> receivers;
+        Dictionary<InPortName, List<IComponent>> receivers;
 
         public Component()
         {
-            portValues = new Dictionary<PortName, object>();
-            receivers = new Dictionary<PortName, List<IComponent>>();
+            portValues = new Dictionary<InPortName, object>();
+            receivers = new Dictionary<InPortName, List<IComponent>>();
         }
      /*   public Network Network { get; set; }
 //  Component.prototype.description = '';
@@ -41,10 +41,10 @@ namespace MadFlo
         }
         */
 
-        public void Receive(PortName name, object value)
+        public void Receive(InPortName name, object value)
         {
             portValues[name] = value;
-            foreach (PortName port in portValues.Keys)
+            foreach (InPortName port in portValues.Keys)
             {
                 if (portValues[port] != null)
                 {
@@ -53,7 +53,7 @@ namespace MadFlo
             }
         }
 
-        public void Send(PortName outPortName, object value)
+        public void Send(InPortName outPortName, object value)
         {
             List<IComponent> receivingComponents = receivers[outPortName];
             foreach (var receiver in receivingComponents)

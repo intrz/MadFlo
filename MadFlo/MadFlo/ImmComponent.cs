@@ -13,13 +13,15 @@ namespace MadFlo
         public int MajorVersion { get; private set; }
         public int MinorVersion { get; private set; }
         public string Name { get; private set; }
-        public ImmutableDictionary<PortName, Port> Ports { get; private set; }
+        public ImmutableDictionary<InPortName, InPort> InPorts { get; private set; }
+        public ImmutableDictionary<OutPortName, OutPort> OutPorts { get; private set; }
 
         public ImmComponent()
         {
             Properties = ImmutableDictionary.Create<string, object>();
             Functions = ImmutableList.Create<Delegate>();
-            Ports = ImmutableDictionary.Create<PortName, Port>();
+            InPorts = ImmutableDictionary.Create<InPortName, InPort>();
+            OutPorts = ImmutableDictionary.Create<OutPortName, OutPort>();
             MinorVersion = 0;
             MajorVersion = 0;
         }
@@ -44,7 +46,8 @@ namespace MadFlo
             var c = new ImmComponent();
             c.Properties = this.Properties;
             c.Functions = this.Functions;
-            c.Ports = this.Ports;
+            c.InPorts = this.InPorts;
+            c.OutPorts = this.OutPorts;
             c.MinorVersion = this.MinorVersion;
             c.MajorVersion = this.MajorVersion;
             return c;
@@ -57,21 +60,30 @@ namespace MadFlo
             return c;
         }
 
-        // -----------------------
-        // Properties
-        // -----------------------
-
-        public ImmComponent WithPorts(ImmutableDictionary<PortName, Port> values)
+        public ImmComponent WithOutPorts(ImmutableDictionary<OutPortName, OutPort> values)
         {
             var c = this.Clone();
-            c.Ports = values;
+            c.OutPorts = values;
             c.MajorVersion += 1;
             return c;
         }
 
-        public ImmComponent AddPort(PortName key, Port value)
+        public ImmComponent AddOutPort(OutPortName key, OutPort value)
         {
-            return this.WithPorts(this.Ports.Add(key, value));
+            return this.WithOutPorts(this.OutPorts.Add(key, value));
+        }
+
+        public ImmComponent WithInPorts(ImmutableDictionary<InPortName, InPort> values)
+        {
+            var c = this.Clone();
+            c.InPorts = values;
+            c.MajorVersion += 1;
+            return c;
+        }
+
+        public ImmComponent AddInPort(InPortName key, InPort value)
+        {
+            return this.WithInPorts(this.InPorts.Add(key, value));
         }
 
         public ImmComponent WithProperties(ImmutableDictionary<string, object> values)

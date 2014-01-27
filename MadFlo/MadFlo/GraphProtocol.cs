@@ -15,7 +15,6 @@ namespace MadFlo
 
         public static Func<Node, Graph, Graph> AddNode = (node, graph) =>
         {
-
             return null;// graph.AddNode(node);
         };
     }

@@ -29,7 +29,7 @@ namespace MadFlo
 
 
         private NodeId Clone()
-        {
+        { 
             var c = new NodeId();
             c.Value = this.Value;
             return c;

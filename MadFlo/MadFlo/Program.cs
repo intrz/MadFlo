@@ -24,35 +24,35 @@ namespace MadFlo
             var adderOutputName = OutPortName.Empty.WithValue("out");
             var adderOutputPort = OutPort.Empty.WithName(adderOutputName).WithPortType(intPortType);
 
-            Func<int, Graph, NodeId, ImmComponent, ImmComponent> addFirstNum = (int x, Graph graph, NodeId nodeId, ImmComponent component) => 
+            Func<int, Graph, NodeId, ImmComponent, Graph> addFirstNum = (int x, Graph graph, NodeId nodeId, ImmComponent component) => 
             {
                 if (component.Properties.ContainsKey("y"))
                 {
                     int y = (int)component.Properties["y"];
                     var result = x + y;
                     graph.Send(result, nodeId, adderOutputName);
-                    return component;
+                    return graph;
                 }
                 else
                 {
                     component = component.WithProperties(component.Properties.Add("x", x));
-                    return component;
+                    return graph.ReplaceNode(nodeId, Node.Empty.WithComponent(component).WithId(nodeId));
                 }
             };
-            
-            Func<int, Graph, NodeId, ImmComponent, ImmComponent> addSecondNum = (int y, Graph graph, NodeId nodeId, ImmComponent component) => 
+
+            Func<int, Graph, NodeId, ImmComponent, Graph> addSecondNum = (int y, Graph graph, NodeId nodeId, ImmComponent component) => 
             {
                 if (component.Properties.ContainsKey("x"))
                 {
                     int x = (int)component.Properties["x"];
                     var result = x + y;
                     graph.Send(result, nodeId, adderOutputName);
-                    return component;
+                    return graph;
                 }
                 else
                 {
                     component = component.WithProperties(component.Properties.Add("y", y));
-                    return component;
+                    return graph.ReplaceNode(nodeId, Node.Empty.WithComponent(component).WithId(nodeId));
                 }
             };
             var adderInputPortName1 = InPortName.Empty.WithValue("in1");
@@ -80,10 +80,10 @@ namespace MadFlo
 
 
             //Start console writer component
-            Func<object, Graph, NodeId, ImmComponent, ImmComponent> helloWorldInputPortProcessor = (object x, Graph graph, NodeId nodeId, ImmComponent component) =>
+            Func<object, Graph, NodeId, ImmComponent, Graph> helloWorldInputPortProcessor = (object x, Graph graph, NodeId nodeId, ImmComponent component) =>
             {
                 Console.WriteLine("Hello {0}", x.ToString());
-                return component;
+                return graph;
             };
             var consoleWriterInputPortName = InPortName.Empty.WithValue("in");
             InPort helloWorldInputPort = InPort.Empty.WithName(consoleWriterInputPortName).WithPortType(stringPortType).WithProcess(helloWorldInputPortProcessor);
@@ -124,9 +124,7 @@ namespace MadFlo
                 var value = initial.Value;
                 var node = currentGraph.Nodes[nodeId];
                 var port = node.Component.InPorts[portName];
-                ImmComponent component = (ImmComponent)port.Process.DynamicInvoke(value, currentGraph, nodeId, node.Component);
-                var newNode = Node.Empty.WithComponent(component).WithId(node.Id);
-                currentGraph = currentGraph.ReplaceNode(nodeId, newNode);
+                currentGraph = (Graph)port.Process.DynamicInvoke(value, currentGraph, nodeId, node.Component);
             }
 
             Console.Out.Write("jauda");

@@ -19,16 +19,17 @@ namespace MadFlo
         {
             var stringPortType = PortType.Empty.WithValue("string");
 
-            Func<string,string> forwardProcess = (string input) => { return input; };
-            var forwardInputPortName = InPortName.Empty.WithValue("input");
-            var forwardInputPort = InPort.Empty.WithName(forwardInputPortName).WithPortType(stringPortType).WithProcess(forwardProcess);
+            //send(data, outport)
             var forwardOutputPortName = OutPortName.Empty.WithValue("out");
             var fordwardOutputPort = OutPort.Empty.WithName(forwardOutputPortName).WithPortType(stringPortType);
+            Action<string, Graph, NodeId> forwardProcess = (string input, Graph graph, NodeId nodeId) => { graph.Send(input, nodeId, forwardOutputPortName); };
+            var forwardInputPortName = InPortName.Empty.WithValue("in");
+            var forwardInputPort = InPort.Empty.WithName(forwardInputPortName).WithPortType(stringPortType).WithProcess(forwardProcess);                        
             var forwardComponent = ImmComponent.Empty.AddInPort(forwardInputPortName, forwardInputPort)
                                                      .AddOutPort(forwardOutputPortName, fordwardOutputPort);
 
-            Action<string> helloWorldInputPortProcessor = (string x) => Console.WriteLine("Hello {0}", x);
-            var helloWorldInputPortName = InPortName.Empty.WithValue("input");
+            Action<string, Graph, NodeId> helloWorldInputPortProcessor = (string x, Graph graph, NodeId nodeId) => Console.WriteLine("Hello {0}", x);
+            var helloWorldInputPortName = InPortName.Empty.WithValue("in");
             InPort helloWorldInputPort = InPort.Empty.WithName(helloWorldInputPortName).WithPortType(stringPortType).WithProcess(helloWorldInputPortProcessor);
             var helloWorldComponent = ImmComponent.Empty.AddInPort(helloWorldInputPortName, helloWorldInputPort);
 
@@ -42,7 +43,7 @@ namespace MadFlo
                                                              .WithToNodeId(myNode.Id)
                                                              .WithToPortName(helloWorldInputPortName)
                                         );
-                                        
+
 
             foreach (var initial in helloGraph.Initials)
             {
@@ -51,7 +52,7 @@ namespace MadFlo
                 var value = initial.Value;
                 var node = helloGraph.Nodes[nodeId];
                 var port = node.Component.InPorts[portName];
-                port.Process.DynamicInvoke(value);
+                port.Process.DynamicInvoke(value, helloGraph, nodeId);
             }
 
             Console.Out.Write("jauda");

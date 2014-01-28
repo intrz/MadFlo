@@ -49,6 +49,17 @@ namespace MadFlo
             c.Initials = this.Initials;
             return c;
         }
+
+        public void Send(object input, NodeId fromNode, OutPortName outPortName)
+        {
+            Socket mySocket = this.Edges.FirstOrDefault(socket => socket.FromNodeId.Value.Equals(fromNode.Value) && socket.FromPortName.Value.Equals(outPortName.Value));
+            var toNodeId = mySocket.ToNodeId;
+            var toPortName = mySocket.ToPortName;
+            var toNode = this.Nodes[toNodeId];
+            var toPort = toNode.Component.InPorts[toPortName];
+            toPort.Process.DynamicInvoke(input, this, toNodeId);
+        }
+
         public Graph WithNodes(ImmutableDictionary<NodeId, Node> values)
         {
             var c = this.Clone();

@@ -49,6 +49,17 @@ namespace MadFlo
             c.Initials = this.Initials;
             return c;
         }
+
+        public void Send(object input, NodeId fromNode, OutPortName outPortName)
+        {
+            Socket mySocket = this.Edges.FirstOrDefault(socket => socket.FromNodeId.Value.Equals(fromNode.Value) && socket.FromPortName.Value.Equals(outPortName.Value));
+            var toNodeId = mySocket.ToNodeId;
+            var toPortName = mySocket.ToPortName;
+            var toNode = this.Nodes[toNodeId];
+            var toPort = toNode.Component.InPorts[toPortName];
+            toPort.Process.DynamicInvoke(input, this, toNodeId, toNode.Component);
+        }
+
         public Graph WithNodes(ImmutableDictionary<NodeId, Node> values)
         {
             var c = this.Clone();
@@ -113,20 +124,20 @@ namespace MadFlo
         public Graph InsertNode(int index, Node value)
         {
             return this.WithNodes(this.Nodes.Insert(index, value));
+        }*/
+
+
+        public Graph ReplaceNode(NodeId nodeId, Node newNode)
+        {            
+            return this.WithNodes(this.Nodes.Remove(nodeId).Add(nodeId, newNode));
         }
 
 
-        public Graph ReplaceNode(Node oldValue, Node newValue)
-        {
-            return this.WithNodes(this.Nodes.Replace(oldValue, newValue));
-        }
-
-
-        public Graph RemoveNode(Node value)
+        public Graph RemoveNode(NodeId value)
         {
             return this.WithNodes(this.Nodes.Remove(value));
         }
-        */
+        
         // -----------------------
         // Edges
         // -----------------------

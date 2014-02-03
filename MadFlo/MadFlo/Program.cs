@@ -104,6 +104,9 @@ namespace MadFlo
                                         );
              */
 
+            var runGraphGraph = Graph.Empty
+                                ;
+
             var helloGraph = Graph.Empty
                             .AddNode(adderNode.Id, adderNode)
                             .AddInitial(Initial.Empty.WithValue(1).WithToPortName(adderInputPortName1).WithToNodeId(adderNode.Id))

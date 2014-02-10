@@ -14,7 +14,7 @@ namespace MadFlo
     class Program
     {
         private static Evaluator evaluator = new Evaluator(new CompilerContext(new CompilerSettings(), new ConsoleReportPrinter()));
-
+        //test1
         static void Main(string[] args)
         {
             var stringPortType = PortType.Empty.WithValue("string");
